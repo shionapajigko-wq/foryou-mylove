@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" href="images/Love U.png">
+<meta charset="UTF-8">
+<title>ของขวัญให้เธอ❤️</title>
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #ffe4ec;
+    box-sizing: border-box;
+  }
+  .frame {
+    display: inline-block;
+    border: 5px solid #ff69b4;
+    border-radius: 15px;
+    padding: 20px;
+    background: white;
+  }
+  img {
+    max-width: 300px;
+    max-height: 300px;
+    width: auto;
+    height: auto;
+    transition: all 0.3s ease;
+  }
+  .btn {
+    font-size: 18px;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    transition: 0.3s;
+  }
+  .yes { background-color: #ff69b4; color: white; }
+  .no { background-color: #ccc; }
+  .love {
+    background-color: red;
+    color: white;
+    font-size: 30px !important;
+    padding: 20px 40px;
+  }
+  .message-box {
+    border: 3px dashed #ff69b4;
+    padding: 15px;
+    margin-top: 20px;
+    font-size: 20px;
+    background: #fff0f6;
+  }
+</style>
+</head>
+<body>
+
+<div class="frame" id="mainFrame">
+  <h1 id="question">เธอรักเค้ามั้ย? 💖</h1>
+  <img id="gif" src="https://media.tenor.com/76BaX0eo304AAAAj/kitty-kitty-heart.gif" alt="cute gif">
+  <div id="btnContainer"></div>
+</div>
+
+<script>
+  const gif = document.getElementById('gif');
+  const question = document.getElementById('question');
+  const btnContainer = document.getElementById('btnContainer');
+  let yesBtnSize = 18;
+  let noCount = 0;
+
+  // แก้ตรงนี้เพื่อเปลี่ยนรูปเมื่อกด no
+  let gifs = ["https://i.postimg.cc/7ZxgJXf1/image.png", 
+    "https://i.postimg.cc/Bn0GTP0B/350-20250814050553.png",
+    "https://i.postimg.cc/4d51SM73/350-20250814051708.png",
+    "https://i.postimg.cc/RVqTggMM/350-20250814051830.png",
+    "https://i.postimg.cc/Qt4T5rKc/350-20250814052315.png",
+    "https://i.postimg.cc/BZzFn400/350-20250814052519.png"
+  ]
+
+  function initButtons() {
+    btnContainer.innerHTML = `
+      <button class="btn yes" id="yesBtn">วันครบรอบ 💕</button>
+      <button class="btn no" id="noBtn">วันพฤหัสไง😢</button>
+    `;
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+
+    yesBtn.addEventListener('click', () => yesClick(yesBtn));
+    noBtn.addEventListener('click', () => noClick(yesBtn, noBtn));
+  }
+
+  function resetPage() {
+    noCount = 0;
+    yesBtnSize = 18;
+    question.textContent = "วันนี้วันอะไรเอ่ย? 💖";
+    // แก้ตรงนี้เพื่อเปลี่ยนรูปหน้าแรก
+    gif.src = "https://i.postimg.cc/7ZxgJXf1/image.png";
+    initButtons();
+  }
+
+  function yesClick(yesBtn) {
+    // แก้ตรงนี้เพื่อเปลี่ยนรูปเมื่อกด yes
+    gif.src = "https://i.postimg.cc/jS5Dr1D1/296-20250216030245.png";
+    question.textContent = "สุขสันต์วันครบรอบนะคะ💗";
+    btnContainer.innerHTML = `<button class="btn" id="homeBtn">เล่นอีกรอบมั้ย?</button>`;
+    document.getElementById('homeBtn').addEventListener('click', resetPage);
+  }
+
+  function noClick(yesBtn, noBtn) {
+    yesBtnSize += 10;
+    yesBtn.style.fontSize = yesBtnSize + 'px';
+    noCount++;
+    gif.src = gifs[noCount]
+    if (noCount >= 5) {
+      noBtn.remove();
+      yesBtn.textContent = "วับครบรอบ!!";
+      yesBtn.classList.add('love');
+      yesBtn.onclick = () => {
+        // แก้ตรงนี้เพื่อเปลี่ยนรูปเมื่อกด love
+        gif.src = "https://i.postimg.cc/bwDqgfDq/Love-U.png";
+        question.innerHTML = `<div class="message-box">สุุขสันต์วันครบรอบนะคะ💞</div>`;
+        btnContainer.innerHTML = `<button class="btn" id="homeBtn">เอาอีกๆ</button>`;
+        document.getElementById('homeBtn').addEventListener('click', resetPage);
+      };
+    }
+  }
+
+  resetPage();
+</script>
+
+</body>
+</html>
